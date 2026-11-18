@@ -10,7 +10,8 @@ namespace Monogame2ScaledImages
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         Rectangle window;
-        Texture2D circleTexture;
+        Texture2D circleTexture, rectangleTexture;
+        Rectangle circleRect, topRect, halfRect, bottomRect, topCenterRect, centerCircleRect;
 
         public Game1()
         {
@@ -25,6 +26,12 @@ namespace Monogame2ScaledImages
             window = new Rectangle(0, 0, 800, 600);
             _graphics.PreferredBackBufferWidth = window.Width;
             _graphics.PreferredBackBufferHeight = window.Height;
+            circleRect = new Rectangle(100, 100, 40, 40);
+            topRect = new Rectangle(0, 0, window.Width, 15);
+            halfRect = new Rectangle(0, 200, 400, 20);
+            bottomRect = new Rectangle(0, 580, window.Width, 30);
+            topCenterRect = new Rectangle(375, 0, 50, 50);
+            centerCircleRect = new Rectangle(350, 250, 100, 100);
             _graphics.ApplyChanges();
             base.Initialize();
         }
@@ -32,7 +39,8 @@ namespace Monogame2ScaledImages
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+            circleTexture = Content.Load<Texture2D>("circle");
+            rectangleTexture = Content.Load<Texture2D>("rectangle");
 
             // TODO: use this.Content to load your game content here
         }
@@ -49,10 +57,19 @@ namespace Monogame2ScaledImages
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
-
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(rectangleTexture, new Rectangle(100, 100, 40, 40), Color.White);
+            _spriteBatch.Draw(rectangleTexture, topRect, Color.Red);
+            _spriteBatch.Draw(rectangleTexture, halfRect, Color.Blue);
+            _spriteBatch.Draw(rectangleTexture, bottomRect, Color.Red);
+            _spriteBatch.Draw(rectangleTexture, topCenterRect, Color.WhiteSmoke);
+            _spriteBatch.Draw(circleTexture, centerCircleRect, Color.White);
+            _spriteBatch.Draw(circleTexture, new Rectangle(100, 300, 40, 60), Color.IndianRed);
+            _spriteBatch.Draw(circleTexture, circleRect, Color.DarkOliveGreen);
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }
